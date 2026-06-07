@@ -1,0 +1,173 @@
+!================= Router Configuration ===============
+!=============== <Organization's Name> ================
+!Author: Team 3
+!Date: June 7th, 2026
+!Objective: Provide a Global contiguration for Chufani's
+!network devices.
+!======================================================
+
+!================ Configuración Global =====================
+enable
+
+clock set HH:MM:SS <Month. E. Jun> <Day> <Year>
+
+configure terminal
+
+hostname RF-Chufani
+
+no ip domain lookup
+
+banner motd #
+
+|====== DISPOSITIVO BAJO PROPIEDAD DE CHUFANI SA DE CV ========|
+|==============================================================|
+|  Este dispositivo es propiedad de la Constructora Chufani    |
+|  SA de CV.                                                   |
+|                                                              |
+|  Cualquier acceso al mismo sin autorizacion explicita de     |
+|  Chifani sera procesada bajo las leyes mexicanas.            |
+|                                                              |
+|  Para mas detalles contactar al administrador.               |
+|                                                              |
+|                   ---------------------                      |
+|                   |||||||||||||   |||||                      |
+|                   ||||||||||||||   ||||                      |
+|                   ||||||||||   ||   |||                      |
+|                   ||||||||   |||||   ||                      |
+|                   |||||||   ||||      |                      |
+|                   ||||||   |||   ||   |                      |
+|                   ||||   |||   |||||  |                      |
+|                   |||   ||||||||||||| |                      |
+|                   |||   ||||||||   ||||                      |
+|                   |||   |||||||   |||||                      |
+|                   ||||   ||||   |||||||                      |
+|                   |||||        ||||||||                      |
+|                   ---------------------                      |
+|                                                              |
+|==============================================================|
+#
+
+username CIT privilege 15 secret tc2006b
+username CEO privilege 15 secret tc2006b
+
+ip domain name chufani.com
+
+service password-encryption 
+
+login block-for 120 attempts 2 within 30
+
+crypto key generate rsa
+yes
+1024
+
+line console 0
+  login local
+  exec-timeout 3
+  logging synchronous
+
+line vty 0 1
+  exec-timeout 3
+  transport input ssh
+  login local
+  logging synchronouss
+
+service password-encryption 
+
+!================ Fin de Configuración Global =====================
+
+!================== Configuración de interfaces ===================
+
+interface G0/0/0
+  description Puerto de acceso a Internet
+  ip address 192.168.30.254 255.255.255.252
+  no shutdown
+
+!================ Configuración de subinterfaces ==================
+
+interface g0/0/1.10
+  description Interfaz de la interconexión con la VLAN de Servidores
+  encapsulation dot1q 10
+  ip address 172.19.2.246 255.255.255.248
+
+interface g0/0/1.20
+  description Interfaz de la interconexión con la VLAN de Ventas
+  encapsulation dot1q 20
+  ip address 172.19.2.158 255.255.255.224
+
+interface g0/0/1.21
+  description Interfaz de la interconexión con la VLAN de Presupuestos
+  encapsulation dot1q 21
+  ip address 172.19.2.62 255.255.255.192
+
+interface g0/0/1.30
+  description Interfaz de la interconexión con la VLAN de Proyectos
+  encapsulation dot1q 30
+  ip address 172.19.0.126 255.255.255.128
+
+interface g0/0/1.40
+  description Interfaz de la interconexión con la VLAN de Oficinas
+  encapsulation dot1q 40
+  ip address 172.19.0.254 255.255.255.128
+
+interface g0/0/1.50
+  description Interfaz de la interconexión con la VLAN de Dirección
+  encapsulation dot1q 50
+  ip address 172.19.2.190 255.255.255.224
+
+interface g0/0/1.51
+  description Interfaz de la interconexión con la VLAN de CEO
+  encapsulation dot1q 51
+  ip address 172.19.2.254 255.255.255.248
+
+interface g0/0/1.60
+  description Interfaz de la interconexión con la VLAN de Front Desk
+  encapsulation dot1q 60
+  ip address 172.19.3.6 255.255.255.248
+
+interface g0/0/1.61
+  description Interfaz de la interconexión con la VLAN de Invitados
+  encapsulation dot1q 61
+  ip address 172.19.2.126 255.255.255.192
+
+interface g0/0/1.70
+  description Interfaz de la interconexión con la VLAN de VozIP
+  encapsulation dot1q 70
+  ip address 172.19.1.126 255.255.255.128
+
+interface g0/0/1.71
+  description Interfaz de la interconexión con la VLAN de Impresoras
+  encapsulation dot1q 71
+  ip address 172.19.2.238 255.255.255.240
+
+interface g0/0/1.80
+  description Interfaz de la interconexión con la VLAN de CCTV
+  encapsulation dot1q 80
+  ip address 172.19.3.14 255.255.255.248
+
+interface g0/0/1.81
+  description Interfaz de la interconexión con la VLAN de Control de Acceso
+  encapsulation dot1q 81
+  ip address 172.19.3.22 255.255.255.248
+
+interface g0/0/1.90
+  description Interfaz de la interconexión con la VLAN de IoT
+  encapsulation dot1q 90
+  ip address 172.19.1.254 255.255.255.128
+
+interface g0/0/1.98
+  description Interfaz de la interconexión con la VLAN de Firewall (Sophos)
+  encapsulation dot1q 98
+  ip address 172.19.3.30 255.255.255.248
+
+interface g0/0/1.911
+  description Interfaz de la interconexión con la VLAN de Gestion
+  encapsulation dot1q 911
+  ip address 172.19.2.222 255.255.255.240
+
+interface g0/0/1
+  no shutdown
+
+!================ Configuración de rutas estaticas ==================
+ip route 0.0.0.0 0.0.0.0 G0/0/0
+ip route 0.0.0.0 0.0.0.0 S0/1/0
+
