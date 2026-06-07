@@ -9,7 +9,6 @@
 !================ Configuración Global =====================
 enable
 
-clock set HH:MM:SS <Month. E. Jun> <Day> <Year>
 
 configure terminal
 

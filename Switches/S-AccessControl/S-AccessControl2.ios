@@ -1,0 +1,81 @@
+!================= Router Configuration ===============
+!=============== <Organization's Name> ================
+!Author: Team 3
+!Date: June 6th, 2026
+!Objective: Provide a Global contiguration for Chufani's
+!network devices.
+!======================================================
+
+!================ Configuración Global =====================
+enable
+
+
+configure terminal
+
+hostname S-AccessControl2
+
+no ip domain lookup
+
+banner motd #
+
+|====== DISPOSITIVO BAJO PROPIEDAD DE CHUFANI SA DE CV ========|
+|==============================================================|
+|  Este dispositivo es propiedad de la Constructora Chufani    |
+|  SA de CV.                                                   |
+|                                                              |
+|  Cualquier acceso al mismo sin autorizacion explicita de     |
+|  Chifani sera procesada bajo las leyes mexicanas.            |
+|                                                              |
+|  Para mas detalles contactar al administrador.               |
+|==============================================================|
+#
+
+username CIT privilege 15 secret tc2006b
+username CEO privilege 15 secret tc2006b
+
+ip domain name chufani.com
+
+service password-encryption 
+
+login block-for 120 attempts 2 within 30
+
+crypto key generate rsa
+yes
+1024
+
+line console 0
+    login local
+    exec-timeout 3
+    logging synchronous
+
+line vty 0 1
+    exec-timeout 3
+    transport input ssh
+    login local
+    logging synchronouss
+
+service password-encryption 
+
+!================ Fin de Configuración Global ==========================
+
+!======================= Configuracion de VLANS =======================
+
+vlan 911
+  name Gestion
+
+! Puertos TRUNK
+interface range g1/0/23-24
+  description Puerto de la VLAN Gestion
+  switchport mode TRUNK
+  no shutdown
+
+interface VLAN 911
+  description Interfaz VLAN Gestion
+  ip address 172.19.2.213 255.255.255.240
+  no shutdown
+
+ip default-gateway 172.19.2.222
+
+!============== Fin de configuracion de VLANS en Switch ==============
+
+!=============== Fin de la Configuracion del Switch ===================
