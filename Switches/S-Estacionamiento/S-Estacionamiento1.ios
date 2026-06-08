@@ -52,7 +52,7 @@ line vty 0 1
     exec-timeout 3
     transport input ssh
     login local
-    logging synchronouss
+    logging synchronous
 
 service password-encryption 
 
