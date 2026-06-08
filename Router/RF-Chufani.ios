@@ -167,7 +167,7 @@ interface g0/0/1.98
 interface g0/0/1.911
   description Interfaz de la interconexión con la VLAN de Gestion
   encapsulation dot1q 911
-  ip address 172.19.2.222 255.255.255.240
+  ip address 172.19.2.222 255.255.255.224
 
 interface g0/0/1
   no shutdown

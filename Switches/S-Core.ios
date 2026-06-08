@@ -152,7 +152,7 @@ interface range g1/0/1-24
 
 interface VLAN 911
   description Interfaz VLAN Gestion
-  ip address 172.19.2.193 255.255.255.240
+  ip address 172.19.2.193 255.255.255.224
   no shutdown
 
 ip default-gateway 172.19.2.222
