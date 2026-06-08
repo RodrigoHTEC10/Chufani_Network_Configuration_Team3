@@ -59,17 +59,9 @@ service password-encryption
 
 !======================= Configuracion de VLANS =======================
 
-vlan 60
-  name Front_Desk
-
-vlan 71
-  name Impresoras
-
-vlan 40
-  name Oficinas
-
-vlan 911
-  name Gestion
+vtp domain chufani.com
+vtp mode client
+vtp password tc2006b
 
 interface range g1/0/1-2
   description Puerto de la VLAN Front Desk

@@ -60,11 +60,9 @@ service password-encryption
 
 !======================= Configuracion de VLANS =======================
 
-vlan 30
-  name Proyectos
-
-vlan 911
-  name Gestion
+vtp domain chufani.com
+vtp mode client
+vtp password tc2006b
 
 interface range g1/0/1-22
   description Puerto de la VLAN Proyectos

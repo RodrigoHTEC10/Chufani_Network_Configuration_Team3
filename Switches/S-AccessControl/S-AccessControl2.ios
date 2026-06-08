@@ -60,8 +60,9 @@ service password-encryption
 
 !======================= Configuracion de VLANS =======================
 
-vlan 911
-  name Gestion
+vtp domain chufani.com
+vtp mode client
+vtp password tc2006b
 
 ! Puertos TRUNK
 interface range g1/0/23-24

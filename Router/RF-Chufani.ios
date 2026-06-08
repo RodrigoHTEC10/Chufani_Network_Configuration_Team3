@@ -1,5 +1,5 @@
 !================= Router Configuration ===============
-!=============== <Organization's Name> ================
+!=================== ITESM - Chufani ==================
 !Author: Team 3
 !Date: June 7th, 2026
 !Objective: Provide a Global contiguration for Chufani's
@@ -176,59 +176,59 @@ interface g0/0/1
 
 ip dhcp excluded-address 172.19.2.158
 ip dhcp pool Pool-Ventas
-   network 172.19.2.128 255.255.255.224
-   default-router 172.19.2.158
-   dns-server 8.8.8.8
+    network 172.19.2.128 255.255.255.224
+    default-router 172.19.2.158
+    dns-server 8.8.8.8
 
 ip dhcp excluded-address 172.19.2.62
 ip dhcp pool Pool-Presupuestos
-   network 172.19.2.0 255.255.255.192
-   default-router 172.19.2.62
-   dns-server 8.8.8.8
+    network 172.19.2.0 255.255.255.192
+    default-router 172.19.2.62
+    dns-server 8.8.8.8
 
 ip dhcp excluded-address 172.19.0.126
 ip dhcp pool Pool-Proyectos
-   network 172.19.0.0 255.255.255.128
-   default-router 172.19.0.126
-   dns-server 8.8.8.8
+    network 172.19.0.0 255.255.255.128
+    default-router 172.19.0.126
+    dns-server 8.8.8.8
 
 ip dhcp excluded-address 172.19.0.254
 ip dhcp pool Pool-Oficinas
-   network 172.19.0.128 255.255.255.128
-   default-router 172.19.0.254
-   dns-server 8.8.8.8
+    network 172.19.0.128 255.255.255.128
+    default-router 172.19.0.254
+    dns-server 8.8.8.8
 
 ip dhcp excluded-address 172.19.2.190
 ip dhcp pool Pool-Direccion
-   network 172.19.2.160 255.255.255.224
-   default-router 172.19.2.190
-   dns-server 8.8.8.8
+    network 172.19.2.160 255.255.255.224
+    default-router 172.19.2.190
+    dns-server 8.8.8.8
 
 ip dhcp excluded-address 172.19.2.254
 ip dhcp pool Pool-CEO
-   network 172.19.2.248 255.255.255.248
-   default-router 172.19.2.254
-   dns-server 8.8.8.8
+    network 172.19.2.248 255.255.255.248
+    default-router 172.19.2.254
+    dns-server 8.8.8.8
 
 ip dhcp excluded-address 172.19.3.6
 ip dhcp pool Pool-FrontDesk
-   network 172.19.3.0 255.255.255.248
-   default-router 172.19.3.6
-   dns-server 8.8.8.8
+    network 172.19.3.0 255.255.255.248
+    default-router 172.19.3.6
+    dns-server 8.8.8.8
 
 ip dhcp excluded-address 172.19.2.126
 ip dhcp pool Pool-Invitados
-   network 172.19.2.64 255.255.255.192
-   default-router 172.19.2.126
-   dns-server 8.8.8.8
+    network 172.19.2.64 255.255.255.192
+    default-router 172.19.2.126
+    dns-server 8.8.8.8
 
 ip dhcp excluded-address 172.19.1.126
 ip dhcp pool Pool-VozIP
-   network 172.19.1.0 255.255.255.128
-   default-router 172.19.1.126
-   dns-server 8.8.8.8
+    network 172.19.1.0 255.255.255.128
+    default-router 172.19.1.126
+    dns-server 8.8.8.8
 
 !================ Configuración de rutas estaticas ==================
 ip route 0.0.0.0 0.0.0.0 G0/0/0
-ip route 0.0.0.0 0.0.0.0 S0/1/0
+ip route 0.0.0.0 0.0.0.0 S0/1/0 50
 

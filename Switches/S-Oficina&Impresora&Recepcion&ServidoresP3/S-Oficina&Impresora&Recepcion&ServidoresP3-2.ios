@@ -60,14 +60,9 @@ service password-encryption
 
 !======================= Configuracion de VLANS =======================
 
-vlan 40
-  name Oficinas
-
-vlan 10
-  name Servidores
-
-vlan 911
-  name Gestion
+vtp domain chufani.com
+vtp mode client
+vtp password tc2006b
 
 interface range g1/0/1-12
   description Puerto de la VLAN Oficinas

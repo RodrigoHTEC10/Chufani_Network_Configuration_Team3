@@ -60,14 +60,9 @@ service password-encryption
 
 !======================= Configuracion de VLANS =======================
 
-vlan 20
-  name Ventas
-
-vlan 21
-  name Presupuestos
-
-vlan 911
-  name Gestion
+vtp domain chufani.com
+vtp mode client
+vtp password tc2006b
 
 interface range g1/0/1-11
   description Puerto de la VLAN Ventas

@@ -60,14 +60,9 @@ service password-encryption
 
 !======================= Configuracion de VLANS =======================
 
-vlan 80
-  name CCTV
-
-vlan 81
-  name Control_de_Acceso
-
-vlan 911
-  name Gestion
+vtp domain chufani.com
+vtp mode client
+vtp password tc2006b
 
 interface range g1/0/1-8
   description Puerto de la VLAN CCTV

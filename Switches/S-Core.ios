@@ -1,14 +1,13 @@
 !================= Router Configuration ===============
-!=============== <Organization's Name> ================
+!=================== ITESM - Chufani ==================
 !Author: Team 3
-!Date: June 6th, 2026
+!Date: June 8th, 2026
 !Objective: Provide a Global contiguration for Chufani's
 !network devices.
 !======================================================
 
 !================ Configuración Global =====================
 enable
-
 
 configure terminal
 
@@ -76,8 +75,74 @@ service password-encryption
 
 !======================= Configuracion de VLANS =======================
 
+vtp domain chufani.com
+vtp mode server 
+vtp password tc2006b
+
+
+vlan 10
+  name Servidores
+  exit
+
+vlan 20
+  name Ventas
+  exit
+
+vlan 21
+  name Presupuestos
+  exit
+
+vlan 30
+  name Proyectos
+  exit
+
+vlan 40
+  name Oficinas
+  exit
+
+vlan 50
+  name Direccion
+  exit
+
+vlan 51
+  name CEO
+  exit
+
+vlan 60
+  name Front_Desk
+  exit
+
+vlan 61
+  name Invitados
+  exit
+
+vlan 70
+  name VozIP
+  exit
+
+vlan 71
+  name Impresoras
+  exit
+
+vlan 80
+  name CCTV
+  exit
+
+vlan 81
+  name Control_de_Acceso
+  exit
+
+vlan 90
+  name IoT
+  exit
+
+vlan 98
+  name Firewall_Sophos
+  exit
+
 vlan 911
   name Gestion
+  exit
 
 ! Puertos TRUNK
 interface range g1/0/1-24
