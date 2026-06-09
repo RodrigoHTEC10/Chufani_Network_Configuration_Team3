@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 !================= Switch Configuration ===============
 !=============== ITESM - Chufani ================
-=======
-!================= Switch Configuration ===============
-!=============== <Organization's Name> ================
->>>>>>> 1446ca43ed1a9579826d354cb2c0e15044f532c2
 !Author: Team 3
 !Date: June 6th, 2026
 !Objective: Provide a Global contiguration for Chufani's
@@ -14,12 +9,16 @@
 !================ Configuración Global =====================
 enable
 
+! Acceder al modo de configuracion global del switch
 configure terminal
 
+! Establecer el nombre del dispositivo para identificarlo dentro de la topologia
 hostname S-Oficina&Impresora&Recepcion&ServidoresP3-1
 
+! Deshabilitar la busqueda de dominios
 no ip domain lookup
 
+! Configurar el mensaje de bienvenida (Message of the Day - MOTD)
 banner motd #
 
 |====== DISPOSITIVO BAJO PROPIEDAD DE CHUFANI SA DE CV ========|
@@ -34,22 +33,28 @@ banner motd #
 |==============================================================|
 #
 
+! Base de datos de usuarios para autenticacion local con privilegios administrativos
 username CIT privilege 15 secret tc2006b
 username CEO privilege 15 secret tc2006b
 
+! Configurar el nombre de dominio para la generacion de claves criptograficas de SSH
 ip domain name chufani.com
 
+! Configuracion de seguridad para bloquear intentos fallidos de acceso
 login block-for 120 attempts 2 within 30
 
+! Generar claves RSA para SSH
 crypto key generate rsa
 yes
 1024
 
+! Proteccion del acceso fisico por consola del switch
 line console 0
     login local
     exec-timeout 3
     logging synchronous
 
+! Configuracion de acceso remoto por VTY para las lineas 0 y 1
 line vty 0 1
     exec-timeout 3
     transport input ssh
@@ -58,43 +63,49 @@ line vty 0 1
 
 !================ Fin de Configuración Global ==========================
 
-!======================= Configuracion de VLANS =======================
+!================= Configuracion de Capa 2 =======================
 
+! Configuracion del switch como cliente VTP
 vtp domain chufani.com
 vtp mode client
 vtp password tc2006b
 
+! Asignar los puertos de acceso del area de Front Desk a la VLAN 60
 interface range g1/0/1-2
   description Puerto de la VLAN Front Desk
   switchport mode access
   switchport access vlan 60
   no shutdown
 
+! Asignar los puertos de acceso del area de Impresoras a la VLAN 71
 interface range g1/0/5-9
   description Puerto de la VLAN Impresoras
   switchport mode access
   switchport access vlan 71
   no shutdown
 
+! Asignar los puertos de acceso del area de Oficinas a la VLAN 40
 interface range g1/0/13-22
   description Puerto de la VLAN Oficinas
   switchport mode access
   switchport access vlan 40
   no shutdown
 
-! Puertos TRUNK
+! Configurar los uplinks como enlaces troncales hacia la red de distribucion
 interface range g1/0/23-24
   description Puerto de la VLAN Gestion
   switchport mode TRUNK
   no shutdown
 
+!================ Configuracion de Gestion ========================
+! Configuracion de la interfaz VLAN 911 de gestion
 interface VLAN 911
   description Interfaz VLAN Gestion
   ip address 172.19.2.196 255.255.255.224
   no shutdown
 
+! Configurar la puerta de enlace
 ip default-gateway 172.19.2.222
 
-!============== Fin de configuracion de VLANS en Switch ==============
 
-!=============== Fin de la Configuracion del Switch ===================
+!=============== Fin de la Configuracion del Switch ===============
