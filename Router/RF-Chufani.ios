@@ -9,8 +9,6 @@
 !================ Configuración Global =====================
 enable
 
-clock set HH:MM:SS <Month. E. Jun> <Day> <Year>
-
 configure terminal
 
 hostname RF-Chufani
@@ -92,7 +90,7 @@ interface S0/1/0
 interface g0/0/1.10
   description Interfaz de la interconexión con la VLAN de Servidores
   encapsulation dot1q 10
-  ip address 172.19.2.246 255.255.255.248
+  ip address 172.19.3.6 255.255.255.248
 
 interface g0/0/1.20
   description Interfaz de la interconexión con la VLAN de Ventas
@@ -122,12 +120,12 @@ interface g0/0/1.50
 interface g0/0/1.51
   description Interfaz de la interconexión con la VLAN de CEO
   encapsulation dot1q 51
-  ip address 172.19.2.254 255.255.255.248
+  ip address 172.19.3.14 255.255.255.248
 
 interface g0/0/1.60
   description Interfaz de la interconexión con la VLAN de Front Desk
   encapsulation dot1q 60
-  ip address 172.19.3.6 255.255.255.248
+  ip address 172.19.2.238 255.255.255.240
 
 interface g0/0/1.61
   description Interfaz de la interconexión con la VLAN de Invitados
@@ -142,17 +140,17 @@ interface g0/0/1.70
 interface g0/0/1.71
   description Interfaz de la interconexión con la VLAN de Impresoras
   encapsulation dot1q 71
-  ip address 172.19.2.238 255.255.255.240
+  ip address 172.19.2.254 255.255.255.240
 
 interface g0/0/1.80
   description Interfaz de la interconexión con la VLAN de CCTV
   encapsulation dot1q 80
-  ip address 172.19.3.14 255.255.255.248
+  ip address 172.19.3.22 255.255.255.248
 
 interface g0/0/1.81
   description Interfaz de la interconexión con la VLAN de Control de Acceso
   encapsulation dot1q 81
-  ip address 172.19.3.22 255.255.255.248
+  ip address 172.19.3.30 255.255.255.248
 
 interface g0/0/1.90
   description Interfaz de la interconexión con la VLAN de IoT
@@ -162,7 +160,7 @@ interface g0/0/1.90
 interface g0/0/1.98
   description Interfaz de la interconexión con la VLAN de Firewall (Sophos)
   encapsulation dot1q 98
-  ip address 172.19.3.30 255.255.255.248
+  ip address 172.19.3.38 255.255.255.248
 
 interface g0/0/1.911
   description Interfaz de la interconexión con la VLAN de Gestion
@@ -204,16 +202,16 @@ ip dhcp pool Pool-Direccion
     default-router 172.19.2.190
     dns-server 8.8.8.8
 
-ip dhcp excluded-address 172.19.2.254
+ip dhcp excluded-address 172.19.3.14
 ip dhcp pool Pool-CEO
-    network 172.19.2.248 255.255.255.248
-    default-router 172.19.2.254
+    network 172.19.3.8 255.255.255.248
+    default-router 172.19.3.14
     dns-server 8.8.8.8
 
-ip dhcp excluded-address 172.19.3.6
+ip dhcp excluded-address 172.19.2.238
 ip dhcp pool Pool-FrontDesk
-    network 172.19.3.0 255.255.255.248
-    default-router 172.19.3.6
+    network 172.19.2.224 255.255.255.240
+    default-router 172.19.2.238
     dns-server 8.8.8.8
 
 ip dhcp excluded-address 172.19.2.126
