@@ -1,4 +1,4 @@
-!================= Router Configuration ===============
+!================= Switch Configuration ===============
 !=============== <Organization's Name> ================
 !Author: Team 3
 !Date: June 6th, 2026
@@ -8,7 +8,6 @@
 
 !================ Configuración Global =====================
 enable
-
 
 configure terminal
 
