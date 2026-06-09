@@ -5,16 +5,19 @@
 !network devices.
 !======================================================
 
-!================ Configuración Global =====================
+!================ Configuracion Global =====================
 enable
 
-
+! Acceder al modo de configuracion global del controlador
 configure terminal
 
+! Establecer el nombre del dispositivo para identificarlo dentro de la topologia
 hostname ControladorCCTV
 
+! Deshabilitar la busqueda de dominios
 no ip domain lookup
 
+! Configurar el mensaje de bienvenida (Message of the Day - MOTD)
 banner motd #
 
 |====== DISPOSITIVO BAJO PROPIEDAD DE CHUFANI SA DE CV ========|
@@ -45,57 +48,67 @@ banner motd #
 |==============================================================|
 #
 
+! Base de datos de usuarios para autenticacion local con privilegios administrativos
 username CIT privilege 15 secret tc2006b
 username CEO privilege 15 secret tc2006b
 
+! Configurar el nombre de dominio para la generacion de claves criptograficas de SSH
 ip domain name chufani.com
 
+! Configuracion de seguridad para bloquear intentos fallidos de acceso
 login block-for 120 attempts 2 within 30
 
+! Generar claves RSA para SSH
 crypto key generate rsa
 yes
 1024
 
+! Proteccion del acceso fisico por consola del controlador
 line console 0
     login local
     exec-timeout 3
     logging synchronous
 
+! Configuracion de acceso remoto por VTY para las lineas 0 y 1
 line vty 0 1
     exec-timeout 3
     transport input ssh
     login local
-    logging synchronous 
+    logging synchronous
 
-!================ Fin de Configuración Global ==========================
+!================ Fin de Configuracion Global =====================
 
-!======================= Configuracion de VLANS =======================
+!================ Configuracion de Capa 2 =======================
 
+! Configuracion del controlador como cliente VTP
 vtp domain chufani.com
 vtp mode client
 vtp password tc2006b
 
-! Puertos TRUNK
+! Configurar los uplinks como enlaces troncales hacia la red de distribucion
 interface range g1/0/23-24
   description Puerto de la VLAN Gestion
-  switchport mode TRUNK
+  switchport mode trunk
   no shutdown
 
-interface VLAN 80
+!================ Configuracion de Gestion ========================
+! Configuracion de la interfaz VLAN 80
+interface vlan 80
   description Interfaz VLAN CCTV
   ip address 172.19.3.21 255.255.255.248
   no shutdown
 
+! Configurar la puerta de enlace
 ip default-gateway 172.19.3.22
 
-!============== Fin de configuracion de VLANS en Switch ==============
+!=============== Configuracion del Puerto Fisico =================
+no interface vlan 80
 
-!=============== Fin de la Configuracion del Switch ===================
-
-no interface VLAN 80
-
+! Configurar el puerto fisico de enlace del controlador
 interface g1/0/23
   description Uplink-CCTV-Upstream
   no switchport
   ip address 172.19.3.21 255.255.255.248
   no shutdown
+
+!=============== Fin de la Configuracion del Controlador =========
