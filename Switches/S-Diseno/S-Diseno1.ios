@@ -9,7 +9,6 @@
 !================ Configuración Global =====================
 enable
 
-
 configure terminal
 
 hostname S-Diseno1
@@ -35,8 +34,6 @@ username CEO privilege 15 secret tc2006b
 
 ip domain name chufani.com
 
-service password-encryption 
-
 login block-for 120 attempts 2 within 30
 
 crypto key generate rsa
@@ -53,8 +50,6 @@ line vty 0 1
     transport input ssh
     login local
     logging synchronous
-
-service password-encryption 
 
 !================ Fin de Configuración Global ==========================
 
