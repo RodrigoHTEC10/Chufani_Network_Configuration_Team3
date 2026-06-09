@@ -95,3 +95,10 @@ ip default-gateway 172.19.3.30
 !============== Fin de configuracion de VLANS en Switch ==============
 
 !=============== Fin de la Configuracion del Switch ===================
+no interface VLAN 81
+
+interface g1/0/23
+  description Uplink-AC-Upstream
+  no switchport
+  ip address 172.19.3.27 255.255.255.248
+  no shutdown
