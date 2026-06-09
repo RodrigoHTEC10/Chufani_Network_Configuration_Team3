@@ -1,5 +1,10 @@
-!================= Router Configuration ===============
+<<<<<<< HEAD
+!================= Switch Configuration ===============
 !=============== ITESM - Chufani ================
+=======
+!================= Switch Configuration ===============
+!=============== <Organization's Name> ================
+>>>>>>> 1446ca43ed1a9579826d354cb2c0e15044f532c2
 !Author: Team 3
 !Date: June 6th, 2026
 !Objective: Provide a Global contiguration for Chufani's
@@ -34,7 +39,6 @@ username CEO privilege 15 secret tc2006b
 
 ip domain name chufani.com
 
-
 login block-for 120 attempts 2 within 30
 
 crypto key generate rsa
@@ -51,8 +55,6 @@ line vty 0 1
     transport input ssh
     login local
     logging synchronous
-
-service password-encryption 
 
 !================ Fin de Configuración Global ==========================
 
