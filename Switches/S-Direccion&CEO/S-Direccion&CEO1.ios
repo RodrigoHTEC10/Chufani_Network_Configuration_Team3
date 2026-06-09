@@ -9,7 +9,6 @@
 !================ Configuración Global =====================
 enable
 
-
 configure terminal
 
 hostname S-Direccion&CEO1
@@ -53,8 +52,6 @@ line vty 0 1
     transport input ssh
     login local
     logging synchronous
-
-service password-encryption 
 
 !================ Fin de Configuración Global ==========================
 
