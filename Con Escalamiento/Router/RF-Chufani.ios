@@ -1,0 +1,312 @@
+!================= Router Configuration ===============
+!=================== ITESM - Chufani ==================
+!Author: Team 3
+!Date: June 10th, 2026
+!Objective: Provide a Global contiguration for Chufani's
+!network devices.
+!======================================================
+
+!================ Configuracion Global =====================
+enable
+
+! acceder al modo de configuracion global
+configure terminal
+
+! Establecer el nombre del dispositivo
+hostname RF-Chufani
+
+! Deshabilitar la busqueda de dominios para evitar retrasos en la linea de comandos
+no ip domain lookup
+
+! Mensaje de bienvenida (Message of the Day - MOTD) para advertir sobre el acceso no autorizado
+banner motd #
+
+|====== DISPOSITIVO BAJO PROPIEDAD DE CHUFANI SA DE CV ========|
+|==============================================================|
+|  Este dispositivo es propiedad de la Constructora Chufani    |
+|  SA de CV.                                                   |
+|                                                              |
+|  Cualquier acceso al mismo sin autorizacion explicita de     |
+|  Chifani sera procesada bajo las leyes mexicanas.            |
+|                                                              |
+|  Para mas detalles contactar al administrador.               |
+|                                                              |
+|                   ---------------------                      |
+|                   |||||||||||||   |||||                      |
+|                   ||||||||||||||   ||||                      |
+|                   ||||||||||   ||   |||                      |
+|                   ||||||||   |||||   ||                      |
+|                   |||||||   ||||      |                      |
+|                   ||||||   |||   ||   |                      |
+|                   ||||   |||   |||||  |                      |
+|                   |||   ||||||||||||| |                      |
+|                   |||   ||||||||   ||||                      |
+|                   |||   |||||||   |||||                      |
+|                   ||||   ||||   |||||||                      |
+|                   |||||        ||||||||                      |
+|                   ---------------------                      |
+|                                                              |
+|==============================================================|
+#
+
+! Base de datos de usuarios para autenticacion local
+username CIT privilege 15 secret tc2006b
+username CEO privilege 15 secret tc2006b
+
+! Configurar el nombre de dominio para la generacion de claves criptograficas
+ip domain name chufani.com
+
+! Configuracion de seguridad para el acceso remoto (SSH)
+login block-for 120 attempts 2 within 30
+
+! Generar claves RSA para SSH con un tamano de 1024 bits
+crypto key generate rsa
+yes
+1024
+
+! Proteccion del acceso por consola
+line console 0
+  login local
+  exec-timeout 3
+  logging synchronous
+
+! Configuracion de acceso remoto por VTY (SSH) limitandolo a 2 dispositivos
+line vty 0 1
+  exec-timeout 3
+  transport input ssh
+  login local
+  logging synchronous
+
+! Bloqueo de acceso remoto por VTY para lineas 2 a 15
+line vty 2 15
+  login local
+  exec-timeout 3
+  transport input none
+  logging synchronous
+
+!================ Fin de Configuracion Global =====================
+
+!================== Configuracion de interfaces ===================
+
+! Configuracion de la interfaz de administracion (G0/0/1) para la interconexion con el switch de acceso
+interface G0/0/0
+  description Puerto de conexion con el ISP primario
+  ip address 192.168.30.254 255.255.255.252
+  no shutdown
+
+! Configuracion de la interfaz (S0/1/0) para la conexion con el ISP secundario
+interface S0/1/0
+  description Puerto de conexion con el ISP secundario
+  ip address 172.16.255.246 255.255.255.252
+  no shutdown
+
+!================ Configuracion de subinterfaces ==================
+! Inicio de la configuracion de subinterfaces para las VLANs del edificio principal
+
+! | Nombre          | VLAN    |
+! --------------------------
+! Servidores           10
+! Ventas               20
+! Presupuestos         21
+! Proyectos            30
+! Oficinas             40
+! Direccion            50
+! CEO                  51
+! Front Desk           60
+! Invitados            61
+! VozIP                70
+! Impresoras           71
+! CCTV                 80
+! Control de Acceso    81
+! IoT                  90
+! Firewall (Sophos)    98
+! Gestion              911
+
+! Configuracion de la subinterfaz para la VLAN de Servidores
+interface g0/0/1.10
+  description Interfaz de la interconexion con la VLAN de Servidores
+  encapsulation dot1q 10
+  ip address 172.19.11.14 255.255.255.240
+
+! Configuracion de la subinterfaz para la VLAN de Ventas
+interface g0/0/1.20
+  description Interfaz de la interconexion con la VLAN de Ventas
+  encapsulation dot1q 20
+  ip address 172.19.9.126 255.255.255.128
+
+! Configuracion de la subinterfaz para la VLAN de Presupuestos
+interface g0/0/1.21
+  description Interfaz de la interconexion con la VLAN de Presupuestos
+  encapsulation dot1q 21
+  ip address 172.19.9.254 255.255.255.128
+
+! Configuracion de la subinterfaz para la VLAN de Proyectos
+interface g0/0/1.30
+  description Interfaz de la interconexion con la VLAN de Proyectos
+  encapsulation dot1q 30
+  ip address 172.19.8.254 255.255.255.0
+
+! Configuracion de la subinterfaz para la VLAN de Oficinas
+interface g0/0/1.40
+  description Interfaz de la interconexion con la VLAN de Oficinas
+  encapsulation dot1q 40
+  ip address 172.19.1.254 255.255.254.0
+
+! Configuracion de la subinterfaz para la VLAN de Direccion
+interface g0/0/1.50
+  description Interfaz de la interconexion con la VLAN de Direccion
+  encapsulation dot1q 50
+  ip address 172.19.10.62 255.255.255.192
+
+! Configuracion de la subinterfaz para la VLAN de CEO
+interface g0/0/1.51
+  description Interfaz de la interconexion con la VLAN de CEO
+  encapsulation dot1q 51
+  ip address 172.19.10.222 255.255.255.224
+
+! Configuracion de la subinterfaz para la VLAN de Front Desk
+interface g0/0/1.60
+  description Interfaz de la interconexion con la VLAN de Front Desk
+  encapsulation dot1q 60
+  ip address 172.19.10.126 255.255.255.192
+
+! Configuracion de la subinterfaz para la VLAN de Invitados
+interface g0/0/1.61
+  description Interfaz de la interconexion con la VLAN de Invitados
+  encapsulation dot1q 61
+  ip address 172.19.3.254 255.255.254.0
+
+! Configuracion de la subinterfaz para la VLAN de VozIP
+interface g0/0/1.70
+  description Interfaz de la interconexion con la VLAN de VozIP
+  encapsulation dot1q 70
+  ip address 172.19.5.254 255.255.254.0
+
+! Configuracion de la subinterfaz para la VLAN de Impresoras
+interface g0/0/1.71
+  description Interfaz de la interconexion con la VLAN de Impresoras
+  encapsulation dot1q 71
+  ip address 172.19.10.254 255.255.255.224
+
+! Configuracion de la subinterfaz para la VLAN de CCTV
+interface g0/0/1.80
+  description Interfaz de la interconexion con la VLAN de CCTV
+  encapsulation dot1q 80
+  ip address 172.19.11.30 255.255.255.240
+
+! Configuracion de la subinterfaz para la VLAN de Control de Acceso
+interface g0/0/1.81
+  description Interfaz de la interconexion con la VLAN de Control de Acceso
+  encapsulation dot1q 81
+  ip address 172.19.11.46 255.255.255.240
+
+! Configuracion de la subinterfaz para la VLAN de IoT
+interface g0/0/1.90
+  description Interfaz de la interconexion con la VLAN de IoT
+  encapsulation dot1q 90
+  ip address 172.19.7.254 255.255.254.0
+
+! Configuracion de la subinterfaz para la VLAN de Firewall (Sophos)
+interface g0/0/1.98
+  description Interfaz de la interconexion con la VLAN de Firewall (Sophos)
+  encapsulation dot1q 98
+  ip address 172.19.11.54 255.255.255.248
+
+! Configuracion de la subinterfaz para la VLAN de Gestion
+interface g0/0/1.911
+  description Interfaz de la interconexion con la VLAN de Gestion
+  encapsulation dot1q 911
+  ip address 172.19.10.190 255.255.255.192
+
+! Habilitar la interfaz fisica para que las subinterfaces puedan operar
+interface g0/0/1
+  no shutdown
+
+!================ Configuracion de DHCP =============================
+
+!! Configuracion de DHCP para la VLAN de Ventas
+! Apartamos direcciones del DHCP para la VLAN de Ventas
+ip dhcp excluded-address 172.19.9.126
+! Pool DHCP para la VLAN de Ventas
+ip dhcp pool Pool-Ventas
+    network 172.19.9.0 255.255.255.128
+    default-router 172.19.9.126
+    dns-server 8.8.8.8
+
+!! Configuracion de DHCP para la VLAN de Presupuestos
+! Apartamos direcciones del DHCP para la VLAN de Presupuestos
+ip dhcp excluded-address 172.19.9.254
+! Pool DHCP para la VLAN de Presupuestos
+ip dhcp pool Pool-Presupuestos
+    network 172.19.9.128 255.255.255.128
+    default-router 172.19.9.254
+    dns-server 8.8.8.8
+
+!! Configuracion de DHCP para la VLAN de Proyectos
+! Apartamos direcciones del DHCP para la VLAN de Proyectos
+ip dhcp excluded-address 172.19.8.254
+! Pool DHCP para la VLAN de Proyectos
+ip dhcp pool Pool-Proyectos
+    network 172.19.8.0 255.255.255.0
+    default-router 172.19.8.254
+    dns-server 8.8.8.8
+
+!! Configuracion de DHCP para la VLAN de Oficinas
+! Apartamos direcciones del DHCP para la VLAN de Oficinas
+ip dhcp excluded-address 172.19.1.254
+! Pool DHCP para la VLAN de Oficinas
+ip dhcp pool Pool-Oficinas
+    network 172.19.0.0 255.255.254.0
+    default-router 172.19.1.254
+    dns-server 8.8.8.8
+
+!! Configuracion de DHCP para la VLAN de Direccion
+! Apartamos direcciones del DHCP para la VLAN de Direccion
+ip dhcp excluded-address 172.19.10.62
+! Pool DHCP para la VLAN de Direccion
+ip dhcp pool Pool-Direccion
+    network 172.19.10.0 255.255.255.192
+    default-router 172.19.10.62
+    dns-server 8.8.8.8
+
+!! Configuracion de DHCP para la VLAN de CEO
+! Apartamos direcciones del DHCP para la VLAN de CEO
+ip dhcp excluded-address 172.19.10.222
+! Pool DHCP para la VLAN de CEO
+ip dhcp pool Pool-CEO
+    network 172.19.10.192 255.255.255.224
+    default-router 172.19.10.222
+    dns-server 8.8.8.8
+
+!! Configuracion de DHCP para la VLAN de Front Desk
+! Apartamos direcciones del DHCP para la VLAN de Front Desk
+ip dhcp excluded-address 172.19.10.126
+! Pool DHCP para la VLAN de Front Desk
+ip dhcp pool Pool-FrontDesk
+    network 172.19.10.64 255.255.255.192
+    default-router 172.19.10.126
+    dns-server 8.8.8.8
+
+!! Configuracion de DHCP para la VLAN de Invitados
+! Apartamos direcciones del DHCP para la VLAN de Invitados
+ip dhcp excluded-address 172.19.3.254
+! Pool DHCP para la VLAN de Invitados
+ip dhcp pool Pool-Invitados
+    network 172.19.2.0 255.255.254.0
+    default-router 172.19.3.254
+    dns-server 8.8.8.8
+
+!! Configuracion de DHCP para la VLAN de VozIP
+! Apartamos direcciones del DHCP para la VLAN de VozIP
+ip dhcp excluded-address 172.19.5.254
+! Pool DHCP para la VLAN de VozIP
+ip dhcp pool Pool-VozIP
+    network 172.19.4.0 255.255.254.0
+    default-router 172.19.5.254
+    dns-server 8.8.8.8
+
+!================ Configuracion de rutas estaticas ==================
+! Conexion con ISP secundario para redundancia
+ip route 0.0.0.0 0.0.0.0 S0/1/0 50
+! Conexion con ISP primario
+ip route 0.0.0.0 0.0.0.0 G0/0/0

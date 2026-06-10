@@ -1,0 +1,98 @@
+!================= Switch Configuration ===============
+!=============== ITESM - Chufani ================
+!Author: Team 3
+!Date: June 6th, 2026
+!Objective: Provide a Global contiguration for Chufani's
+!network devices.
+!======================================================
+
+!================ Configuración Global =====================
+enable
+
+
+! Acceder al modo de configuracion global del switch
+configure terminal
+
+! Establecer el nombre del dispositivo para identificarlo dentro de la topologia
+hostname S-Diseno2
+
+! Deshabilitar la busqueda de dominios
+no ip domain lookup
+
+! Configurar el mensaje de bienvenida (Message of the Day - MOTD)
+banner motd #
+
+|====== DISPOSITIVO BAJO PROPIEDAD DE CHUFANI SA DE CV ========|
+|==============================================================|
+|  Este dispositivo es propiedad de la Constructora Chufani    |
+|  SA de CV.                                                   |
+|                                                              |
+|  Cualquier acceso al mismo sin autorizacion explicita de     |
+|  Chifani sera procesada bajo las leyes mexicanas.            |
+|                                                              |
+|  Para mas detalles contactar al administrador.               |
+|==============================================================|
+#
+
+! Base de datos de usuarios para autenticacion local con privilegios administrativos
+username CIT privilege 15 secret tc2006b
+username CEO privilege 15 secret tc2006b
+
+! Configurar el nombre de dominio para la generacion de claves criptograficas de SSH
+ip domain name chufani.com
+
+! Configuracion de seguridad para bloquear intentos fallidos de acceso
+login block-for 120 attempts 2 within 30
+
+! Generar claves RSA para SSH
+crypto key generate rsa
+yes
+1024
+
+! Proteccion del acceso fisico por consola del switch
+line console 0
+    login local
+    exec-timeout 3
+    logging synchronous
+
+! Configuracion de acceso remoto por VTY para las lineas 0 y 1
+line vty 0 1
+    exec-timeout 3
+    transport input ssh
+    login local
+    logging synchronous
+
+!================ Fin de Configuración Global ==========================
+
+!================= Configuracion de Capa 2 =======================
+
+! Configuracion del switch como cliente VTP
+vtp domain chufani.com
+vtp mode client
+vtp password tc2006b
+
+! Asignar los puertos de acceso del area de Proyectos a la VLAN 30
+interface range g1/0/1-14
+  description Puerto de la VLAN Proyectos
+  switchport mode access
+  switchport access vlan 30
+  no shutdown
+
+! Configurar los uplinks como enlaces troncales hacia la red de distribucion
+interface range g1/0/23-24
+  description Puerto de la VLAN Gestion
+  switchport mode TRUNK
+  no shutdown
+
+!================ Configuracion de Gestion ========================
+! Configuracion de la interfaz VLAN 911 de gestion
+interface VLAN 911
+  description Interfaz VLAN Gestion
+  ip address 172.19.10.145 255.255.255.192
+  no shutdown
+
+! Configurar la puerta de enlace
+ip default-gateway 172.19.10.190
+
+
+!=============== Fin de la Configuracion del Switch ===============

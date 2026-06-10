@@ -1,0 +1,75 @@
+!================= Switch Configuration ===============
+!=================== ITESM - Chufani ==================
+!Author: Team 3
+!Date: June 6th, 2026
+!Objective: Provide a Global contiguration for Chufani's
+!network devices.
+!======================================================
+
+!================ Configuración Global =====================
+enable
+
+
+configure terminal
+
+hostname <Device Name>
+
+no ip domain lookup
+
+banner motd #
+
+|====== DISPOSITIVO BAJO PROPIEDAD DE CHUFANI SA DE CV ========|
+|==============================================================|
+|  Este dispositivo es propiedad de la Constructora Chufani    |
+|  SA de CV.                                                   |
+|                                                              |
+|  Cualquier acceso al mismo sin autorizacion explicita de     |
+|  Chifani sera procesada bajo las leyes mexicanas.            |
+|                                                              |
+|  Para mas detalles contactar al administrador.               |
+|                                                              |
+|                   ---------------------                      |
+|                   |||||||||||||   |||||                      |
+|                   ||||||||||||||   ||||                      |
+|                   ||||||||||   ||   |||                      |
+|                   ||||||||   |||||   ||                      |
+|                   |||||||   ||||      |                      |
+|                   ||||||   |||   ||   |                      |
+|                   ||||   |||   |||||  |                      |
+|                   |||   ||||||||||||| |                      |
+|                   |||   ||||||||   ||||                      |
+|                   |||   |||||||   |||||                      |
+|                   ||||   ||||   |||||||                      |
+|                   |||||        ||||||||                      |
+|                   ---------------------                      |
+|                                                              |
+|==============================================================|
+#
+
+username CIT privilege 15 secret tc2006b
+username CEO privilege 15 secret tc2006b
+
+ip domain name chufani.com
+
+service password-encryption 
+
+login block-for 120 attempts 2 within 30
+
+crypto key generate rsa
+yes
+1024
+
+line console 0
+    login local
+    exec-timeout 3
+    logging synchronous
+
+line vty 0 1
+    exec-timeout 3
+    transport input ssh
+    login local
+    logging synchronous
+
+service password-encryption 
+
+!================ Fin de Configuración Global =====================
